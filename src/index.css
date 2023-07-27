@@ -1,0 +1,78 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@font-face {
+    font-family: "iCiel-Koni";
+    src: url("./assets/fonts/iCielKoniBlack.otf") format("truetype");
+}
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,500;1,100&display=swap");
+html #root body {
+    font-family: "Montserrat", sans-serif;
+}
+.text-color {
+    color: #fa7d09 !important;
+}
+.font-koni {
+    font-family: "iCiel-Koni";
+}
+.bg {
+    background: radial-gradient(
+        97.91% 60.14% at 50% 50%,
+        #ffdb7e 0%,
+        #ff7a00 100%
+    );
+}
+.bg_img {
+    background-image: url("./assets/images/bg.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    margin: 0px 50px 30px 50px;
+}
+.banner {
+    background-image: url("./assets/images/menu.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.btn-color {
+    background: #ff000a;
+    border: none;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1), 0px 8px 16px rgba(0, 0, 0, 0.1),
+        inset 0px 0px 0px 10px
+            linear-gradient(
+                269.85deg,
+                #93000a 31.99%,
+                rgba(210, 51, 51, 0) 113.43%
+            );
+    transition: all 0.3s ease;
+}
+.menu-item {
+    position: relative;
+    display: inline-block;
+    padding: 4px 8px; /* Tùy chỉnh padding cho các item trong menu */
+    border: 2px solid transparent; /* Border ban đầu là một border trong suốt */
+    border-radius: 33px; /* Đường cong border */
+    transition: border-color 0.3s ease; /* Hiệu ứng thay đổi border */
+    cursor: pointer;
+}
+
+.menu-item:hover {
+    border-color: white; /* Hiệu ứng khi hover vào menu item */
+}
+
+.menu-item.selected {
+    border-color: white; /* Border mặc định cho menu item đã chọn */
+}
+
+/* Ẩn .menu-item.selected khi hover vào một menu item khác */
+.menu-item:hover:not(.selected) {
+    border-color: transparent;
+}
+/* Event Detail */
+.table {
+    background-image: url("./assets/images/events/table.png");
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+}
