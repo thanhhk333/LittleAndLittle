@@ -1,13 +1,21 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,500;1,100&display=swap");
 @font-face {
     font-family: "iCiel-Koni";
     src: url("./assets/fonts/iCielKoniBlack.otf") format("truetype");
 }
-@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,500;1,100&display=swap");
-html #root body {
+* {
     font-family: "Montserrat", sans-serif;
+    padding: 0;
+    margin: 0;
+}
+html,
+body {
+    margin: 0;
+    padding: 0;
 }
 .text-color {
     color: #fa7d09 !important;
@@ -22,12 +30,32 @@ html #root body {
         #ff7a00 100%
     );
 }
+.ant-input,
+.ant-textarea,
+.ant-select-selector,
+.ant-picker {
+    border-radius: 9px;
+    background: #fff;
+    box-shadow: -1px 3px 3px 0px rgba(178, 91, 11, 0.5) inset;
+    color: Gray;
+    font-weight: 500;
+}
+.ant-input:focus,
+.ant-textarea:focus,
+.ant-select-selector:focus,
+.ant-picker:focus {
+    background: #fff;
+    box-shadow: -1px 3px 3px 0px rgba(178, 91, 11, 1) inset;
+    border: none;
+}
+
+.ant-input {
+    padding: 7px;
+}
 .bg_img {
     background-image: url("./assets/images/bg.png");
-    background-size: cover;
     background-repeat: no-repeat;
-    background-position: center;
-    margin: 0px 50px 30px 50px;
+    background-size: 100% 100%;
 }
 .banner {
     background-image: url("./assets/images/menu.png");
@@ -35,7 +63,6 @@ html #root body {
     background-repeat: no-repeat;
     background-position: center;
 }
-
 .btn-color {
     background: #ff000a;
     border: none;
@@ -75,4 +102,46 @@ html #root body {
     background-image: url("./assets/images/events/table.png");
     background-repeat: no-repeat;
     background-size: 100% 100%;
+}
+/* Home */
+.middleTable {
+    background-image: url("./assets/images/middle.png");
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+}
+.bg-btn {
+    background-image: url("./assets/images/home/bg-btn.png");
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    padding: 10 20;
+}
+.ant-select-item.ant-select-item-option:hover {
+    background-color: #fff6d4 !important;
+    color: #ff7506 !important;
+}
+.ant-select-item.ant-select-item-option.ant-select-item-option-active,
+.ant-select-item.ant-select-item-option.ant-select-item-option-selected {
+    background-color: #fff6d4 !important;
+    color: #ff7506 !important;
+}
+.table-outside {
+    border-radius: 20px;
+    background-color: #fde8b3;
+    border-bottom: 10px solid #ffca7b;
+    padding: 5px;
+}
+.table-inside {
+    border: 3px dashed #ffb489;
+    border-radius: 20px;
+    background-color: #fff6d4;
+    padding: 10px 10px 10px 10px;
+}
+/* Pay */
+.ant-modal-content {
+    border-radius: 30px !important;
+    width: 400px !important;
+    height: 180px !important;
+}
+.ant-notification-notice-close-x svg {
+    color: #ff8a00 !important;
 }

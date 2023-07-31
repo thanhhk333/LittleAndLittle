@@ -1,5 +1,5 @@
 import React from "react";
-import Layout from "../Layout";
+import Layout from "../Layout/Layout";
 import bannerLeft from "../../assets/images/events/Group.png";
 import bannerRight from "../../assets/images/events/banner_right.png";
 import sk1 from "../../assets/images/sk1.png";
@@ -24,21 +24,26 @@ const EventDetail = () => {
                             className="flex justify-between 
                     "
                         >
-                            <img
-                                src={bannerLeft}
-                                alt=""
-                                className="fixed left-0 "
-                            />
-                            <h3 className="mt-40 text-5xl mx-auto text-white font-koni">
-                                Sự kiện 1
+                            <div className="fixed left-0 transform -translate-x-16">
+                                <img
+                                    src={bannerLeft}
+                                    alt=""
+                                    className="scale-75"
+                                />
+                            </div>
+
+                            <h3 className="mt-28 text-5xl mx-auto text-white font-koni">
+                                Sự kiện chi tiết
                             </h3>
-                            <img
-                                src={bannerRight}
-                                alt=""
-                                className="fixed right-0"
-                            />
+                            <div className="fixed right-0 transform translate-x-16 -translate-y-9">
+                                <img
+                                    src={bannerRight}
+                                    alt=""
+                                    className="scale-75"
+                                />
+                            </div>
                         </div>
-                        <Row gutter={10} className="mt-20" justify={"center"}>
+                        <Row gutter={10} className="mt-10" justify={"center"}>
                             <Col span={21}>
                                 <div className="table">
                                     <Row

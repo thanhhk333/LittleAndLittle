@@ -1,5 +1,5 @@
 import React from "react";
-import Layout from "../Layout";
+import Layout from "../Layout/Layout";
 import bannerLeft from "../../assets/images/events/Group.png";
 import bannerRight from "../../assets/images/events/banner_right.png";
 import sk1 from "../../assets/images/sk1.png";
@@ -24,21 +24,26 @@ const Events = () => {
                             className="flex justify-between 
                     "
                         >
-                            <img
-                                src={bannerLeft}
-                                alt=""
-                                className="fixed left-0 "
-                            />
-                            <h3 className="mt-40 text-5xl mx-auto text-white font-koni">
+                            <div className="fixed left-0 transform -translate-x-16">
+                                <img
+                                    src={bannerLeft}
+                                    alt=""
+                                    className="scale-75"
+                                />
+                            </div>
+
+                            <h3 className="mt-28 text-5xl mx-auto text-white font-koni">
                                 Sự kiện nổi bật
                             </h3>
-                            <img
-                                src={bannerRight}
-                                alt=""
-                                className="fixed right-0"
-                            />
+                            <div className="fixed right-0 transform translate-x-16 -translate-y-9">
+                                <img
+                                    src={bannerRight}
+                                    alt=""
+                                    className="scale-75"
+                                />
+                            </div>
                         </div>
-                        <Row gutter={10} justify={"center"} className="mt-20">
+                        <Row gutter={10} justify={"center"} className="mt-10">
                             <Col span={1} className="relative">
                                 <div className="flex items-center justify-center w-full h-full">
                                     <Image
@@ -83,7 +88,11 @@ const Events = () => {
                                             size="middle"
                                             className="px-9 text-white btn-color"
                                         >
-                                            Xem chi tiết
+                                            <span className="font-koni">
+                                                <span className="font-koni">
+                                                    Xem chi tiết
+                                                </span>
+                                            </span>
                                         </Button>
                                     </Link>
                                 </Card>
@@ -116,7 +125,9 @@ const Events = () => {
                                             size="middle"
                                             className="px-9 text-white btn-color"
                                         >
-                                            Xem chi tiết
+                                            <span className="font-koni">
+                                                Xem chi tiết
+                                            </span>
                                         </Button>
                                     </Link>
                                 </Card>
@@ -149,7 +160,9 @@ const Events = () => {
                                             size="middle"
                                             className="px-9 text-white btn-color"
                                         >
-                                            Xem chi tiết
+                                            <span className="font-koni">
+                                                Xem chi tiết
+                                            </span>
                                         </Button>
                                     </Link>
                                 </Card>
@@ -182,7 +195,9 @@ const Events = () => {
                                             size="middle"
                                             className="px-9 text-white btn-color"
                                         >
-                                            Xem chi tiết
+                                            <span className="font-koni">
+                                                Xem chi tiết
+                                            </span>
                                         </Button>
                                     </Link>
                                 </Card>
