@@ -1,4 +1,4 @@
-import React, { forwardRef, useRef, useState } from "react";
+import React, { forwardRef, useEffect, useRef, useState } from "react";
 import Layout from "../Layout/Layout";
 import baloon1 from "../../assets/images/pinkBalloon.png";
 import baloon2 from "../../assets/images/fullBalloon.png";
@@ -8,6 +8,7 @@ import logoDamSen from "../../assets/images/logoDamSen.png";
 import lisa from "../../assets/images/Lisa_Arnold.svg";
 import star from "../../assets/images/home/start.png";
 import children from "../../assets/images/4children.png";
+import dayjs from "dayjs";
 import {
     Row,
     Col,
@@ -21,7 +22,9 @@ import {
 } from "antd";
 import btn from "../../assets/images/events/down-btn.png";
 import calendar from "../../assets/images/home/calendar.png";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { createBooking } from "./../../core/Redux/bookingSlice";
 const Home = () => {
     // viết hàm xử lý sự kiện click vào hình ảnh thì sẽ click vào thẻ select
     const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -35,7 +38,38 @@ const Home = () => {
     const handleCalendarClick = () => {
         isCalendarOpen ? setIsCalendarOpen(false) : setIsCalendarOpen(true);
     };
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const [booking, setBooking] = useState({
+        combo: "Gói gia đình",
+        quantity: 0,
+        dateUse: "",
+        fullName: "",
+        email: "",
+        phone: "",
+    });
 
+    const handleChange = (e: any) => {
+        const { name, value } = e.target;
+        setBooking({
+            ...booking,
+            [name]: value,
+        });
+    };
+
+    const handleSelectChange = (value: any) => {
+        setBooking({
+            ...booking,
+            combo: value,
+        });
+    };
+    const handleSubmit = (e: any) => {
+        dispatch(createBooking(booking) as any);
+        localStorage.setItem("booking", JSON.stringify(booking));
+        navigate("/pay");
+    };
+
+    console.log(booking);
     return (
         <>
             <Layout
@@ -219,7 +253,13 @@ const Home = () => {
                                                         suffixIcon={false}
                                                         open={isMenuOpen}
                                                         className="w-full"
-                                                        onChange={() => {
+                                                        onChange={(e) => {
+                                                            handleChange({
+                                                                target: {
+                                                                    name: "combo",
+                                                                    value: e,
+                                                                },
+                                                            });
                                                             setIsMenuOpen(
                                                                 false
                                                             );
@@ -261,6 +301,9 @@ const Home = () => {
                                                     <Input
                                                         placeholder="Số lượng vé"
                                                         size="large"
+                                                        name="quantity"
+                                                        value={booking.quantity}
+                                                        onChange={handleChange}
                                                     />
                                                 </Col>
                                                 <Col span={10}>
@@ -272,7 +315,19 @@ const Home = () => {
                                                         open={isCalendarOpen}
                                                         placement="bottomLeft"
                                                         className="w-full"
-                                                        onChange={() => {
+                                                        onChange={(e) => {
+                                                            handleChange({
+                                                                target: {
+                                                                    name: "dateUse",
+                                                                    value: e
+                                                                        ? dayjs(
+                                                                              e
+                                                                          ).format(
+                                                                              "DD/MM/YYYY"
+                                                                          )
+                                                                        : "",
+                                                                },
+                                                            });
                                                             setIsCalendarOpen(
                                                                 false
                                                             );
@@ -299,22 +354,34 @@ const Home = () => {
                                                     <Input
                                                         placeholder="Họ và tên"
                                                         size="large"
+                                                        name="fullName"
+                                                        value={booking.fullName}
+                                                        onChange={handleChange}
                                                     />
                                                 </Col>
                                                 <Col span={22}>
                                                     <Input
                                                         placeholder="Số điện thoại"
                                                         size="large"
+                                                        name="phone"
+                                                        value={booking.phone}
+                                                        onChange={handleChange}
                                                     />
                                                 </Col>
                                                 <Col span={22}>
                                                     <Input
                                                         placeholder="Địa chỉ email"
                                                         size="large"
+                                                        name="email"
+                                                        value={booking.email}
+                                                        onChange={handleChange}
                                                     />
                                                 </Col>
                                                 <Link to="/pay">
                                                     <Button
+                                                        htmlType="submit"
+                                                        type="primary"
+                                                        onClick={handleSubmit}
                                                         size="middle"
                                                         className="px-20 text-white btn-color mb-6"
                                                     >
