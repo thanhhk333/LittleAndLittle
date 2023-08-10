@@ -1,4 +1,4 @@
-import React, { forwardRef, useEffect, useRef, useState } from "react";
+import React, { useState } from "react";
 import Layout from "../Layout/Layout";
 import baloon1 from "../../assets/images/pinkBalloon.png";
 import baloon2 from "../../assets/images/fullBalloon.png";
@@ -18,13 +18,11 @@ import {
     Image,
     Select,
     DatePicker,
-    Card,
 } from "antd";
 import btn from "../../assets/images/events/down-btn.png";
 import calendar from "../../assets/images/home/calendar.png";
 import { Link, useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { createBooking } from "./../../core/Redux/bookingSlice";
+
 const Home = () => {
     // viết hàm xử lý sự kiện click vào hình ảnh thì sẽ click vào thẻ select
     const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -39,7 +37,6 @@ const Home = () => {
         isCalendarOpen ? setIsCalendarOpen(false) : setIsCalendarOpen(true);
     };
     const navigate = useNavigate();
-    const dispatch = useDispatch();
     const [booking, setBooking] = useState({
         combo: "Gói gia đình",
         quantity: 0,
@@ -47,6 +44,7 @@ const Home = () => {
         fullName: "",
         email: "",
         phone: "",
+        codeArray: "",
     });
 
     const handleChange = (e: any) => {
@@ -64,7 +62,6 @@ const Home = () => {
         });
     };
     const handleSubmit = (e: any) => {
-        dispatch(createBooking(booking) as any);
         localStorage.setItem("booking", JSON.stringify(booking));
         navigate("/pay");
     };

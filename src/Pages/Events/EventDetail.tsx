@@ -1,20 +1,53 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Layout from "../Layout/Layout";
 import bannerLeft from "../../assets/images/events/Group.png";
 import bannerRight from "../../assets/images/events/banner_right.png";
-import sk1 from "../../assets/images/sk1.png";
 import sk2 from "../../assets/images/sk2.png";
-import sk3 from "../../assets/images/sk3.png";
-import sk4 from "../../assets/images/sk4.png";
 
-import { Row, Col, Button, Image } from "antd";
-import { Card } from "antd";
+import { Row, Col, Image } from "antd";
 import { CalendarOutlined } from "@ant-design/icons";
-import bg_btn from "../../assets/images/events/btn.png";
-import arrow from "../../assets/images/events/arrow.png";
-import App from "./../../App";
+
+import { useParams } from "react-router";
+import { useDispatch } from "react-redux";
+import { getEventById } from "../../core/Redux/eventSlice";
+import { useSelector } from "react-redux";
+import { RootState } from "../../core/Redux/store";
+import firebase from "firebase/compat/app";
 
 const EventDetail = () => {
+    const { id } = useParams<{ id: string }>();
+    console.log(id);
+    const dispatch = useDispatch();
+    const [event, setEvent] = React.useState({
+        order: "",
+        price: "",
+        timeStart: "",
+        timeEnd: "",
+        img: "",
+        content1: "",
+        content2: "",
+        content3: "",
+    });
+
+    useEffect(() => {
+        const getData = async () => {
+            await firebase
+                .firestore()
+                .collection("events")
+                .doc(id)
+                .get()
+                .then((doc: any) => {
+                    if (doc.exists) {
+                        setEvent(doc.data() as any);
+                    } else {
+                        console.log("No such document!");
+                    }
+                });
+        };
+        getData();
+    }, [id]);
+
+    console.log(event);
     return (
         <>
             <Layout
@@ -33,7 +66,7 @@ const EventDetail = () => {
                             </div>
 
                             <h3 className="mt-28 text-5xl mx-auto text-white font-koni">
-                                Sự kiện chi tiết
+                                Chi tiết sự kiện {event.order}
                             </h3>
                             <div className="fixed right-0 transform translate-x-16 -translate-y-9">
                                 <img
@@ -56,20 +89,21 @@ const EventDetail = () => {
                                     >
                                         <Col span={7}>
                                             <Image
-                                                src={sk1}
+                                                src={event.img}
                                                 preview={false}
                                                 className="rounded-md"
                                             />
                                             <p className="flex items-center mt-1">
                                                 {" "}
                                                 <CalendarOutlined className="text-[#FA7D09] me-2" />{" "}
-                                                30/05/2023 - 08/08/2023
+                                                {event.timeStart} -{" "}
+                                                {event.timeEnd}
                                             </p>
                                             <p className="font-light my-1">
                                                 Đầm sen Park
                                             </p>
                                             <h2 className="font-bold text-2xl text-color">
-                                                25.000 VND
+                                                {event.price} VND
                                             </h2>
                                         </Col>
                                         <Col span={5}>
@@ -78,23 +112,7 @@ const EventDetail = () => {
                                                     {" "}
                                                     Lorem Ipsum{" "}
                                                 </span>{" "}
-                                                is simply dummy text of the
-                                                printing and typesetting
-                                                industry. Lorem Ipsum has been
-                                                the industry's standard dummy
-                                                text ever since the 1500s, when
-                                                an unknown printer took a galley
-                                                of type and scrambled it to make
-                                                a type specimen book. It has
-                                                survived not only five
-                                                centuries, but also the leap
-                                                into electronic sdsd
-                                                typesetting, remaining cssa
-                                                essentially unchanged. It was
-                                                popularised in the 1960s with
-                                                the release of Letraset sheets
-                                                containing Lorem Ipsum passages,
-                                                of Lorem Ipsum.
+                                                {event.content1}
                                             </p>
                                         </Col>
                                         <Col span={5}>
@@ -104,26 +122,12 @@ const EventDetail = () => {
                                                 className="rounded-md"
                                             />
                                             <p className="mt-5 text-justify whitespace-normal">
-                                                Lorem Ipsum is not simply random
-                                                text. It has roots in a piece of
-                                                classical Latin literature from
-                                                45 BC, making it over 2000 years
-                                                old. words, consectetur, from a
-                                                Lorem Ipsum passage, and going
-                                                through the cites of the word in
-                                                classical literature,{" "}
+                                                {event.content2}
                                             </p>
                                         </Col>
                                         <Col span={5}>
                                             <p className=" text-justify whitespace-normal">
-                                                Lorem Ipsum is not simply random
-                                                text. It has roots in a piece of
-                                                classical Latin literature from
-                                                45 BC, making it over 2000 years
-                                                old. words, consectetur, from a
-                                                Lorem Ipsum passage, and going
-                                                through the cites of the word in
-                                                classical literature,{" "}
+                                                {event.content3}
                                             </p>
                                             <Image
                                                 src={sk2}

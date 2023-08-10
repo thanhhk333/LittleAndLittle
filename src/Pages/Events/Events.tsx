@@ -1,53 +1,67 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Layout from "../Layout/Layout";
 import bannerLeft from "../../assets/images/events/Group.png";
 import bannerRight from "../../assets/images/events/banner_right.png";
 import sk1 from "../../assets/images/sk1.png";
-import sk2 from "../../assets/images/sk2.png";
-import sk3 from "../../assets/images/sk3.png";
-import sk4 from "../../assets/images/sk4.png";
 
-import { Row, Col, Button, Image } from "antd";
+import { Row, Col, Button, Image, Input, DatePicker } from "antd";
 import { Card } from "antd";
 import { CalendarOutlined } from "@ant-design/icons";
-import bg_btn from "../../assets/images/events/btn.png";
-import arrow from "../../assets/images/events/arrow.png";
+
 import { Link } from "react-router-dom";
 import { Carousel, CarouselItem } from "../Components/Carousel";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../../core/Redux/store";
+import { addEvent, getEvents } from "../../core/Redux/eventSlice";
+import dayjs from "dayjs";
 
 const Events = () => {
-    const items = [
-        {
-            id: 1,
-            src: sk1,
-            date: "20/10/2021 - 01/08/2023",
-        },
-        {
-            id: 2,
-            src: sk2,
-            date: "20/10/2021 - 01/08/2023",
-        },
-        {
-            id: 3,
-            src: sk3,
-            date: "20/10/2021 - 01/08/2023",
-        },
-        {
-            id: 4,
-            src: sk4,
-            date: "20/10/2021 - 01/08/2023",
-        },
-        {
-            id: 5,
-            src: sk1,
-            date: "20/10/2021 - 01/08/2023",
-        },
-        {
-            id: 6,
-            src: sk2,
-            date: "20/10/2021 - 01/08/2023",
-        },
-    ];
+    const events = useSelector((state: RootState) => state.events.data);
+    const dispath = useDispatch();
+    useEffect(() => {
+        dispath(getEvents() as any);
+    }, []);
+
+    console.log(events);
+
+    const items: any[] = [];
+    events?.map((item) => {
+        items.push({
+            id: item.id,
+            order: item.order,
+            src: item.img,
+            timeStart: item.timeStart,
+            timeEnd: item.timeEnd,
+            price: item.price,
+            img: item.img,
+        });
+    });
+    console.log(items);
+
+    // const [event, setEvent] = React.useState({
+    //     order: "",
+    //     price: "",
+    //     timeStart: "13/08/2022",
+    //     timeEnd: "",
+    //     img: "",
+    //     content1:
+    //         "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic sdsd typesetting, remaining cssa essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, of Lorem Ipsum.",
+    //     content2:
+    //         "Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, ",
+    //     content3:
+    //         "Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, ",
+    // });
+    // const createE = () => {
+    //     dispath(addEvent(event) as any);
+    // };
+
+    // const handleChange = (e: any) => {
+    //     const { name, value } = e.target;
+    //     setEvent({
+    //         ...event,
+    //         [name]: value,
+    //     });
+    // };
     return (
         <>
             <Layout
@@ -77,7 +91,27 @@ const Events = () => {
                             </div>
                         </div>
                         <Row gutter={10} justify={"center"} className="mt-10">
-                            <Col span={20}>
+                            <Col span={20} className="max-w-[1300px]">
+                                {/* <Input name="order" onChange={handleChange} />
+                                <Input name="price" onChange={handleChange} />
+
+                                <DatePicker
+                                    name="timeEnd"
+                                    format={"DD/MM/YYYY"}
+                                    onChange={(e) => {
+                                        handleChange({
+                                            target: {
+                                                name: "timeEnd",
+                                                value: e
+                                                    ? dayjs(e).format(
+                                                          "DD/MM/YYYY"
+                                                      )
+                                                    : "",
+                                            },
+                                        });
+                                    }}
+                                />
+                                <Button onClick={createE}>ADD</Button> */}
                                 <Carousel
                                     pagination={false}
                                     items={items}
@@ -90,15 +124,15 @@ const Events = () => {
                                                 <Card
                                                     hoverable
                                                     cover={
-                                                        <img
+                                                        <Image
                                                             alt="example"
-                                                            src={sk1}
-                                                            className=""
+                                                            src={item.img}
+                                                            preview={false}
                                                         />
                                                     }
                                                 >
                                                     <h3 className="font-bold text-2xl ">
-                                                        Sự kiện {item.id}
+                                                        Sự kiện {item.order}
                                                     </h3>
                                                     <p className="font-light">
                                                         Đầm sen Park
@@ -106,12 +140,15 @@ const Events = () => {
                                                     <p className="flex items-center">
                                                         {" "}
                                                         <CalendarOutlined className="text-[#FA7D09] me-2" />{" "}
-                                                        {item.date}
+                                                        {item.timeStart} -{" "}
+                                                        {item.timeEnd}
                                                     </p>
                                                     <h2 className="font-bold text-2xl text-color my-2">
-                                                        25.000 VND
+                                                        {item.price}
                                                     </h2>
-                                                    <Link to="/events/event-detail">
+                                                    <Link
+                                                        to={`/events/event-detail/${item.id}`}
+                                                    >
                                                         <Button
                                                             size="middle"
                                                             className="px-9 text-white btn-color"
@@ -129,166 +166,6 @@ const Events = () => {
                                     )}
                                 />
                             </Col>
-
-                            {/* <Col span={5}>
-                                <Card
-                                    hoverable
-                                    cover={
-                                        <img
-                                            alt="example"
-                                            src={sk1}
-                                            className=""
-                                        />
-                                    }
-                                >
-                                    <h3 className="font-bold text-2xl ">
-                                        Sự kiện 1{" "}
-                                    </h3>
-                                    <p className="font-light">Đầm sen Park</p>
-                                    <p className="flex items-center">
-                                        {" "}
-                                        <CalendarOutlined className="text-[#FA7D09] me-2" />{" "}
-                                        30/05/2023 - 08/08/2023
-                                    </p>
-                                    <h2 className="font-bold text-2xl text-color my-2">
-                                        25.000 VND
-                                    </h2>
-                                    <Link to="/events/event-detail">
-                                        <Button
-                                            size="middle"
-                                            className="px-9 text-white btn-color"
-                                        >
-                                            <span className="font-koni">
-                                                <span className="font-koni">
-                                                    Xem chi tiết
-                                                </span>
-                                            </span>
-                                        </Button>
-                                    </Link>
-                                </Card>
-                            </Col>
-                            <Col span={5}>
-                                <Card
-                                    hoverable
-                                    cover={
-                                        <img
-                                            alt="example"
-                                            src={sk2}
-                                            className=""
-                                        />
-                                    }
-                                >
-                                    <h3 className="font-bold text-2xl ">
-                                        Sự kiện 2{" "}
-                                    </h3>
-                                    <p className="font-light">Đầm sen Park</p>
-                                    <p className="flex items-center">
-                                        {" "}
-                                        <CalendarOutlined className="text-[#FA7D09] me-2" />{" "}
-                                        30/05/2023 - 08/08/2023
-                                    </p>
-                                    <h2 className="font-bold text-2xl text-color my-2">
-                                        25.000 VND
-                                    </h2>
-                                    <Link to="/events/event-detail">
-                                        <Button
-                                            size="middle"
-                                            className="px-9 text-white btn-color"
-                                        >
-                                            <span className="font-koni">
-                                                Xem chi tiết
-                                            </span>
-                                        </Button>
-                                    </Link>
-                                </Card>
-                            </Col>
-                            <Col span={5}>
-                                <Card
-                                    hoverable
-                                    cover={
-                                        <img
-                                            alt="example"
-                                            src={sk3}
-                                            className=""
-                                        />
-                                    }
-                                >
-                                    <h3 className="font-bold text-2xl ">
-                                        Sự kiện 3{" "}
-                                    </h3>
-                                    <p className="font-light">Đầm sen Park</p>
-                                    <p className="flex items-center">
-                                        {" "}
-                                        <CalendarOutlined className="text-[#FA7D09] me-2" />{" "}
-                                        30/05/2023 - 08/08/2023
-                                    </p>
-                                    <h2 className="font-bold text-2xl text-color my-2">
-                                        25.000 VND
-                                    </h2>
-                                    <Link to="/events/event-detail">
-                                        <Button
-                                            size="middle"
-                                            className="px-9 text-white btn-color"
-                                        >
-                                            <span className="font-koni">
-                                                Xem chi tiết
-                                            </span>
-                                        </Button>
-                                    </Link>
-                                </Card>
-                            </Col>
-                            <Col span={5}>
-                                <Card
-                                    hoverable
-                                    cover={
-                                        <img
-                                            alt="example"
-                                            src={sk4}
-                                            className=""
-                                        />
-                                    }
-                                >
-                                    <h3 className="font-bold text-2xl ">
-                                        Sự kiện 4{" "}
-                                    </h3>
-                                    <p className="font-light">Đầm sen Park</p>
-                                    <p className="flex items-center">
-                                        {" "}
-                                        <CalendarOutlined className="text-[#FA7D09] me-2" />{" "}
-                                        30/05/2023 - 08/08/2023
-                                    </p>
-                                    <h2 className="font-bold text-2xl text-color my-2">
-                                        25.000 VND
-                                    </h2>
-                                    <Link to="/events/event-detail">
-                                        <Button
-                                            size="middle"
-                                            className="px-9 text-white btn-color"
-                                        >
-                                            <span className="font-koni">
-                                                Xem chi tiết
-                                            </span>
-                                        </Button>
-                                    </Link>
-                                </Card>
-                            </Col> */}
-                            {/* <Col span={1} className="relative">
-                                <div className="flex items-center justify-center w-full h-full">
-                                    <Image
-                                        preview={false}
-                                        src={bg_btn}
-                                        className="w-full h-auto"
-                                    />
-
-                                    <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-                                        <Image
-                                            preview={false}
-                                            src={arrow}
-                                            className="w-8 h-8 rotate-180"
-                                        />
-                                    </div>
-                                </div>
-                            </Col> */}
                         </Row>
                     </>
                 }
