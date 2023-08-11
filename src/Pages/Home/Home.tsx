@@ -301,6 +301,7 @@ const Home = () => {
                                                         name="quantity"
                                                         value={booking.quantity}
                                                         onChange={handleChange}
+                                                        required
                                                     />
                                                 </Col>
                                                 <Col span={10}>
@@ -351,6 +352,7 @@ const Home = () => {
                                                     <Input
                                                         placeholder="Họ và tên"
                                                         size="large"
+                                                        required
                                                         name="fullName"
                                                         value={booking.fullName}
                                                         onChange={handleChange}
@@ -360,6 +362,7 @@ const Home = () => {
                                                     <Input
                                                         placeholder="Số điện thoại"
                                                         size="large"
+                                                        required
                                                         name="phone"
                                                         value={booking.phone}
                                                         onChange={handleChange}
@@ -372,6 +375,7 @@ const Home = () => {
                                                         name="email"
                                                         value={booking.email}
                                                         onChange={handleChange}
+                                                        required
                                                     />
                                                 </Col>
                                                 <Link to="/pay">
